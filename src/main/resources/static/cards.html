@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>卡片列表</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #e3f2fd;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .card-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .card {
+        display: flex;
+        background-color: #fff3e0;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        align-items: center;
+      }
+
+      .card img {
+        width: 80px;
+        height: 80px;
+        border-radius: 10px;
+        margin-right: 15px;
+        background-color: #ffeb3b;
+      }
+
+      .card-content {
+        flex-grow: 1;
+      }
+
+      .card-content a {
+        text-decoration: none;
+        color: #000;
+        font-weight: bold;
+        font-size: 18px;
+      }
+
+      .card-content a:hover {
+        text-decoration: underline;
+        color: #ff6f00;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card-container" id="card-container">
+      <!-- 卡片會通過 JavaScript 動態插入 -->
+    </div>
+
+    <script>
+      // 從 API 獲取 JSON 資料
+      fetch("/api/excel")
+        .then((response) => response.json())
+        .then((data) => {
+          const cardContainer = document.getElementById("card-container");
+          data.forEach((item) => {
+            const card = document.createElement("div");
+            card.className = "card";
+
+            // 縮圖
+            const img = document.createElement("img");
+            img.src = "default-thumbnail.png"; // 默認縮圖
+            img.alt = "縮圖";
+
+            // 卡片內容
+            const content = document.createElement("div");
+            content.className = "card-content";
+
+            const link = document.createElement("a");
+            link.href = item.網址; // 使用 "網址" 欄位
+            link.target = "_blank"; // 新窗口打開
+            link.textContent = item.標題; // 使用 "標題" 欄位
+
+            content.appendChild(link);
+            card.appendChild(img);
+            card.appendChild(content);
+            cardContainer.appendChild(card);
+          });
+        })
+        .catch((error) => console.error("Error fetching data:", error));
+    </script>
+  </body>
+</html>

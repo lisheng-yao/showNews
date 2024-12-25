@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Excel Data</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      th,
+      td {
+        max-width: 200px; /* 限制儲存格最大寬度 */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap; /* 禁止換行 */
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #908b8b;
+        position: sticky; /* 固定表頭 */
+        top: 0;
+        z-index: 1;
+      }
+
+      .table-container {
+        max-height: 400px; /* 設定最大高度 */
+        overflow-y: auto; /* 垂直滾動 */
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Excel Data</h1>
+    <table id="excel-table">
+      <thead>
+        <tr id="table-header"></tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+
+    <script>
+      async function fetchExcelData() {
+        try {
+          const response = await fetch("/api/excel");
+          const data = await response.json();
+          renderTable(data);
+        } catch (error) {
+          console.error("Error fetching Excel data:", error);
+        }
+      }
+
+      function renderTable(data) {
+        const headerRow = document.getElementById("table-header");
+        const body = document.getElementById("table-body");
+
+        // 清空表格
+        headerRow.innerHTML = "";
+        body.innerHTML = "";
+
+        if (data.length === 0) {
+          body.innerHTML = '<tr><td colspan="100%">No Data Found</td></tr>';
+          return;
+        }
+
+        // 渲染表頭
+        const headers = Object.keys(data[0]);
+        headers.forEach((header) => {
+          const th = document.createElement("th");
+          th.textContent = header;
+          headerRow.appendChild(th);
+        });
+
+        // 渲染表格內容
+        data.forEach((row) => {
+          const tr = document.createElement("tr");
+          headers.forEach((header) => {
+            const td = document.createElement("td");
+
+            if (header === "網址" && row[header]) {
+              // 如果是網址，渲染為超連結
+              const a = document.createElement("a");
+              a.href = row[header];
+              a.textContent = row[header];
+              a.target = "_blank"; // 新窗口打開
+              td.appendChild(a);
+            } else {
+              td.textContent = row[header];
+            }
+
+            tr.appendChild(td);
+          });
+          body.appendChild(tr);
+        });
+      }
+
+      // 初始化
+      fetchExcelData();
+    </script>
+  </body>
+</html>
