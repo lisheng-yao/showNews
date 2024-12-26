@@ -52,11 +52,23 @@
         text-decoration: underline;
         color: #ff6f00;
       }
+
+      .category {
+        margin-bottom: 1;
+        color: green;
+      }
+
+      h1 {
+        margin: 20;
+        display: flex;
+        justify-content: center; /* 水平居中 */
+      }
     </style>
   </head>
   <body>
+    <h1>新聞推播</h1>
     <div class="card-container" id="card-container">
-      <!-- 卡片會通過 JavaScript 動態插入 -->
+      <!-- 動態插入 -->
     </div>
 
     <script>
@@ -71,8 +83,13 @@
 
             // 縮圖
             const img = document.createElement("img");
-            img.src = "default-thumbnail.png"; // 默認縮圖
+            img.src = "default-picture.png"; // 默認縮圖
             img.alt = "縮圖";
+
+            // 分類
+            const category = document.createElement("div");
+            category.className = "category";
+            category.textContent = item.新聞分類 || "未分類";
 
             // 卡片內容
             const content = document.createElement("div");
@@ -83,6 +100,7 @@
             link.target = "_blank"; // 新窗口打開
             link.textContent = item.標題; // 使用 "標題" 欄位
 
+            content.appendChild(category);
             content.appendChild(link);
             card.appendChild(img);
             card.appendChild(content);
