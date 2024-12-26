@@ -5,69 +5,149 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>卡片列表</title>
     <style>
+      /* 整體背景顏色 */
       body {
-        font-family: Arial, sans-serif;
-        background-color: #e3f2fd;
+        background-color: #f0f8ff; /* 柔和的淺藍色背景 */
+        font-family: Arial, sans-serif; /* 全局字體 */
         margin: 0;
-        padding: 20px;
+        padding: 0;
       }
 
-      .card-container {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        max-width: 600px;
-        margin: 0 auto;
+      /* 卡片容器樣式 */
+      #card-container {
+        max-width: 1200px; /* 容器的最大寬度 */
+        width: 90%; /* 響應式寬度 */
+        margin: 20px auto; /* 居中並添加上方間距 */
       }
 
+      /* 卡片樣式 */
       .card {
         display: flex;
-        background-color: #fff3e0;
-        border-radius: 10px;
-        border: 1px solid #ddd; /* 卡片邊框 */
-        padding: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        align-items: flex-start;
+        border: 1px solid #ddd; /* 輕微邊框 */
+        border-radius: 10px; /* 圓角 */
+        padding: 15px;
+        margin-bottom: 20px; /* 卡片間距 */
+        background-color: #ffffff; /* 卡片白色背景 */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 增強立體感的陰影 */
+        transition: transform 0.2s, box-shadow 0.2s; /* 添加卡片的動態效果 */
       }
 
-      .card img {
-        width: 80px;
-        height: 80px;
-        border-radius: 10px;
-        margin-right: 15px;
-        background-color: #ffeb3b;
+      /* 卡片懸停效果 */
+      .card:hover {
+        transform: translateY(-5px); /* 輕微向上移動 */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* 陰影變強 */
       }
 
+      /* 縮圖樣式 */
+      .card-img {
+        width: 100px; /* 調整圖片寬度 */
+        height: 100px; /* 調整圖片高度 */
+        margin-right: 20px; /* 與文字內容的間距 */
+        border-radius: 6px; /* 縮圖的圓角 */
+        object-fit: cover; /* 確保圖片不變形 */
+      }
+
+      /* 卡片內容區域 */
       .card-content {
-        flex-grow: 1;
+        flex: 1; /* 讓文字內容占用剩餘空間 */
       }
 
-      .card-content a {
-        text-decoration: none;
-        color: #000;
-        font-weight: bold;
-        font-size: 18px;
-      }
-
-      .card-content a:hover {
-        text-decoration: underline;
-        color: #ff6f00;
+      /* 標題和分類區域 */
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
 
       .category {
-        margin-bottom: 1;
-        color: crimson;
+        font-size: 12px;
+        color: #007bff; /* 類別文字顏色 */
+        font-weight: bold;
       }
 
+      .time {
+        font-size: 12px;
+        color: #999; /* 時間文字顏色 */
+      }
+
+      /* 標題樣式 */
+      .title {
+        font-size: 18px; /* 調整標題大小 */
+        font-weight: bold;
+        color: #333;
+        text-decoration: none;
+        margin: 8px 0; /* 與其他元素保持距離 */
+      }
+
+      .title:hover {
+        color: #007bff; /* 滑鼠懸停時顏色 */
+      }
+
+      /* 摘要文字 */
       .summary {
+        font-size: 14px;
+        color: #555;
         line-height: 1.6;
-        margin-top: 10px;
       }
 
       h1 {
         margin: 20;
         display: flex;
         justify-content: center; /* 水平居中 */
+      }
+
+      /* 手機版優化 */
+      @media (max-width: 768px) {
+        /* 卡片容器調整 */
+        #card-container {
+          width: 95%; /* 減少水平間距 */
+          margin: 0 auto; /* 居中容器 */
+        }
+
+        /* 卡片樣式調整 */
+        .card {
+          flex-direction: column; /* 改為垂直排列 */
+          padding: 10px; /* 減少內邊距 */
+          max-width: 100%; /* 卡片寬度自適應 */
+        }
+
+        /* 縮圖調整 */
+        .card-img {
+          width: 50%; /* 圖片寬度調整為卡片寬度的 50% */
+          max-width: 150px; /* 設定最大寬度，避免過大 */
+          height: auto; /* 保持圖片比例 */
+          margin: 0 auto 10px auto; /* 圖片居中，與文字保持間距 */
+          border-radius: 6px; /* 保留圓角 */
+          object-fit: cover; /* 確保圖片不變形 */
+        }
+
+        /* 卡片內容調整 */
+        .card-content {
+          text-align: left; /* 文字左對齊 */
+          padding: 0; /* 去掉額外內邊距 */
+        }
+
+        /* 類別與時間排版 */
+        .header {
+          flex-direction: column; /* 改為垂直排列 */
+          align-items: flex-start; /* 左對齊 */
+          gap: 5px; /* 增加元素間距 */
+        }
+
+        /* 字體大小調整 */
+        .title {
+          font-size: 16px; /* 標題字體稍微縮小 */
+        }
+
+        .summary {
+          font-size: 14px; /* 摘要保持適中字體大小 */
+          line-height: 1.5; /* 行高稍微縮小 */
+        }
+
+        .category,
+        .time {
+          font-size: 12px; /* 時間與分類縮小 */
+        }
       }
     </style>
   </head>
@@ -78,6 +158,13 @@
     </div>
 
     <script>
+      // 格式化時間函數
+      function formatDateTime(dateTimeString) {
+        const [date] = dateTimeString.split(" "); // 分離日期和時間
+        const [day, month, year] = date.split("-"); // 分割年、月、日
+        return `${year}年${month}${day}日`; // 格式化為所需格式
+      }
+
       // 從 API 獲取 JSON 資料
       fetch("/api/excel")
         .then((response) => response.json())
@@ -89,34 +176,50 @@
 
             // 縮圖
             const img = document.createElement("img");
-            img.src = "default-picture.png"; // 默認縮圖
+            img.src = "default-picture.png";
             img.alt = "縮圖";
-
-            // 分類
-            const category = document.createElement("div");
-            category.className = "category";
-            category.textContent = item.新聞分類 || "未分類";
+            img.className = "card-img";
 
             // 卡片內容
             const content = document.createElement("div");
             content.className = "card-content";
 
-            const link = document.createElement("a");
-            link.href = item.網址; // 使用 "網址" 欄位
-            link.target = "_blank"; // 新窗口打開
-            link.textContent = item.標題; // 使用 "標題" 欄位
+            // 類別與時間
+            const header = document.createElement("div");
+            header.className = "header";
 
+            const category = document.createElement("div");
+            category.className = "category";
+            category.textContent = item.新聞分類 || "未分類";
+
+            const time = document.createElement("div");
+            time.className = "time";
+            time.textContent = item.內容擷取時間
+              ? formatDateTime(item.內容擷取時間)
+              : "日期未知";
+
+            header.appendChild(category);
+            header.appendChild(time);
+
+            // 標題
+            const link = document.createElement("a");
+            link.href = item.網址;
+            link.target = "_blank";
+            link.className = "title";
+            link.textContent = item.標題 || "無標題";
+
+            // 摘要
             const summary = document.createElement("div");
             summary.className = "summary";
-            summary.textContent = item.新聞片段 || "無片段";
+            summary.textContent = item.新聞片段 || "無新聞片段";
 
-            // 按照正確順序附加元素
-            content.appendChild(category);
+            // 組裝卡片
+            content.appendChild(header);
             content.appendChild(link);
-            content.appendChild(summary); // 確保 summary 附加到 content 中
+            content.appendChild(summary);
             card.appendChild(img);
             card.appendChild(content);
-            cardContainer.appendChild(card); // 將整個 card 添加到容器中
+            cardContainer.appendChild(card);
           });
         })
         .catch((error) => console.error("Error fetching data:", error));
