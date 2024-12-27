@@ -1,0 +1,229 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #e3f2fd;
+  margin: 0;
+  padding: 20px;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* 改為靠左對齊 */
+  gap: 10px;
+}
+
+.left-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-grow: 1;
+}
+
+.card-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  background-color: #ffeb3b;
+}
+
+.card-title-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.category {
+  font-size: 12px;
+  color: #007bff;
+  text-align: left; /* 類別文字靠左 */
+}
+
+.title {
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #000;
+  text-align: left; /* 標題文字靠左 */
+}
+
+.title:hover {
+  text-decoration: underline;
+  color: #ff6f00;
+}
+
+.date {
+  font-size: 12px;
+  color: #666;
+  white-space: nowrap;
+  text-align: left; /* 日期文字靠左 */
+}
+
+.toggle-button {
+  background-color: #ffcc00; /* 按鈕背景顏色 */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333; /* 按鈕文字顏色 */
+  padding: 5px 10px; /* 內邊距調整 */
+  width: auto; /* 自適應寬度 */
+  white-space: nowrap; /* 禁止換行 */
+  margin-left: auto; /* 將按鈕推到最右 */
+}
+
+.toggle-button:hover {
+  background-color: #ffaa00; /* 按鈕懸停顏色 */
+  color: #fff; /* 懸停時文字顏色 */
+}
+
+.news-details {
+  background-color: #e9eef0;
+  border-radius: 5px;
+  padding: 1px;
+  overflow: hidden;
+  max-height: 0; /* 初始高度為 0 */
+  transition: max-height 0.3s ease-out, padding 0.3s ease-out; /* 平滑過渡 */
+  font-size: 14px;
+  line-height: 1.5; /* 控制行高 */
+  text-align: left; /* 新聞片段靠左 */
+}
+
+.news-details.closed {
+  max-height: 0; /* 收合状态的高度 */
+  padding: 1px; /* 移除内边距，避免内容显露 */
+}
+
+.news-details.open {
+  max-height: 1000px; /* 打開時的最大高度，根據內容調整 */
+  padding: 10px;
+  transition: max-height 0.3s ease-out;
+}
+
+h1 {
+  margin: 20;
+  display: flex;
+  justify-content: center; /* 水平居中 */
+}
+
+/* 手機版優化 */
+@media (max-width: 768px) {
+  /* 卡片容器調整 */
+  #card-container {
+    width: 95%; /* 減少水平間距 */
+    margin: 0 auto; /* 居中容器 */
+  }
+
+  /* 卡片樣式調整 */
+  .card {
+    flex-direction: column; /* 改為垂直排列 */
+    padding: 10px; /* 減少內邊距 */
+    max-width: 100%; /* 卡片寬度自適應 */
+  }
+
+  /* 縮圖調整 */
+  .card-img {
+    width: 50%; /* 圖片寬度調整為卡片寬度的 50% */
+    max-width: 150px; /* 設定最大寬度，避免過大 */
+    height: auto; /* 保持圖片比例 */
+    margin: 0 auto 10px auto; /* 圖片居中，與文字保持間距 */
+    border-radius: 6px; /* 保留圓角 */
+    object-fit: cover; /* 確保圖片不變形 */
+  }
+
+  /* 卡片內容調整 */
+  .card-content {
+    text-align: left; /* 文字左對齊 */
+    padding: 0; /* 去掉額外內邊距 */
+  }
+
+  /* 類別與時間排版 */
+  .header {
+    flex-direction: column; /* 改為垂直排列 */
+    align-items: flex-start; /* 左對齊 */
+    gap: 5px; /* 增加元素間距 */
+  }
+
+  /* 字體大小調整 */
+  .title {
+    font-size: 16px; /* 標題字體稍微縮小 */
+  }
+
+  .summary {
+    font-size: 14px; /* 摘要保持適中字體大小 */
+    line-height: 1.5; /* 行高稍微縮小 */
+  }
+
+  .category,
+  .time {
+    font-size: 12px; /* 時間與分類縮小 */
+  }
+}
+
+/* 手機版優化 */
+@media (max-width: 768px) {
+  body {
+    padding: 10px; /* 減少頁面內邊距 */
+  }
+
+  .card-container {
+    gap: 15px; /* 減少卡片間距 */
+  }
+
+  .card {
+    padding: 10px; /* 減少卡片內邊距 */
+  }
+
+  .card-header {
+    flex-direction: column; /* 改為垂直排列 */
+    align-items: flex-start; /* 卡片內容靠左 */
+  }
+
+  .card-img {
+    width: 100px; /* 縮小圖片 */
+    height: 90px;
+  }
+
+  .category {
+    font-size: 10px; /* 縮小類別文字大小 */
+  }
+
+  .title {
+    font-size: 14px; /* 縮小標題字體大小 */
+  }
+
+  .date {
+    font-size: 10px; /* 縮小日期文字大小 */
+  }
+
+  .toggle-button {
+    font-size: 14px; /* 縮小按鈕字體大小 */
+    padding: 8px 15px; /* 減少內邊距 */
+    width: 100%; /* 按鈕在手機版拉伸至全寬 */
+    text-align: center; /* 保持文字居中 */
+  }
+
+  .news-details {
+    font-size: 12px; /* 縮小新聞片段文字大小 */
+  }
+}
