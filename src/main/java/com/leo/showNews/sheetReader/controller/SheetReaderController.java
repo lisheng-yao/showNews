@@ -47,6 +47,24 @@ public class SheetReaderController {
         }
     }
 
+    @GetMapping("/api/csv2")
+    public ResponseEntity<List<Map<String, String>>> getCsvData2() {
+        String folderPath = "/Users/yaolisheng/SynologyDrive/Backup/CHINA-MOTOR/C/Dennis/Py/9_FormosaPublicOpinionSystemX/05_News_Recommender";
+
+        try {
+            // 使用 service 處理 CSV 並獲取結果
+            List<Map<String, String>> data = sheetReaderService.readCsv2(folderPath);
+
+            // 返回 200 OK 和數據
+            return ResponseEntity.ok(data);
+
+        } catch (IOException e) {
+            // 返回 500 錯誤，並附帶錯誤訊息
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.singletonList(Map.of("error", "無法讀取 CSV 文件: " + e.getMessage())));
+        }
+    }
+
 
 
 }

@@ -5,10 +5,21 @@ function formatDateTime(dateTimeString) {
   return `${year}年${month}月${day}日`; // 格式化為所需格式
 }
 
+// 顯示/隱藏 Loading 提示
+function toggleLoading(show) {
+  const loadingElement = document.getElementById("loading");
+  loadingElement.style.display = show ? "flex" : "none";
+}
+
 // 從 API 獲取 JSON 資料
-fetch("/api/csv")
-  .then((response) => response.json())
+fetch("/api/csv2")
+  .then((response) => {
+    toggleLoading(true); // 顯示 Loading 提示
+    return response.json();
+  })
   .then((data) => {
+    toggleLoading(false); // 請求成功，隱藏 Loading 提示
+
     // 移除可能存在的 BOM
     const sanitizedData = data.map((item) => {
       const sanitizedItem = {};

@@ -10,4 +10,6 @@ public interface SheetReaderService {
     List<Map<String, String>> readExcel(String filePath) throws IOException;
 
     List<Map<String, String>> readCsv(String filePath) throws IOException;
+
+    List<Map<String, String>> readCsv2(String folderPath) throws IOException;
 }

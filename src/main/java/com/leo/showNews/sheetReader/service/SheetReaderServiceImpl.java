@@ -222,8 +222,71 @@ public class SheetReaderServiceImpl implements SheetReaderService {
         return data;
     }
 
+    @Override
+    public List<Map<String, String>> readCsv2(String folderPath) throws IOException {
+        List<Map<String, String>> data = new ArrayList<>();
+        File folder = new File(folderPath);
 
+        // 檢查資料夾是否有效
+        if (!folder.exists() || !folder.isDirectory()) {
+            throw new IOException("指定的路徑不是有效的資料夾！");
+        }
 
+        // 遍歷資料夾中的所有 CSV 文件
+        File[] csvFiles = folder.listFiles((dir, name) -> name.toLowerCase().endsWith(".csv"));
+        if (csvFiles == null || csvFiles.length == 0) {
+            System.out.println("沒有找到任何 CSV 文件！");
+            return data;
+        }
 
+        for (File csvFile : csvFiles) {
+            try (Reader reader = new FileReader(csvFile);
+                 CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader())) {
+
+                // 讀取表頭
+                Map<String, Integer> headers = csvParser.getHeaderMap();
+
+                // 遍歷每一行
+                for (CSVRecord record : csvParser) {
+                    Map<String, String> rowData = new LinkedHashMap<>();
+                    boolean hasValidData = false;
+
+                    for (String header : headers.keySet()) {
+                        String value = record.get(header).trim();
+                        rowData.put(header, value);
+
+                        if (!value.isEmpty()) {
+                            hasValidData = true;
+                        }
+                    }
+
+                    // 檢查 "新聞評分" 並篩選
+                    String scoreStr = rowData.getOrDefault("新聞評分", "0");
+                    try {
+                        int score = Integer.parseInt(scoreStr);
+                        if (score >= 60 && hasValidData) {
+                            data.add(rowData);
+                        }
+                    } catch (NumberFormatException e) {
+                        // 如果 "新聞評分" 不是有效數字，跳過
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("處理 CSV 文件失敗: " + csvFile.getName() + "，錯誤：" + e.getMessage());
+            }
+        }
+
+        // 根據 "內容擷取時間" 排序（從近到遠）
+        data.sort((map1, map2) -> {
+            String time1 = map1.getOrDefault("內容擷取時間", "");
+            String time2 = map2.getOrDefault("內容擷取時間", "");
+            if (time1.isEmpty() && time2.isEmpty()) return 0;
+            if (time1.isEmpty()) return 1;
+            if (time2.isEmpty()) return -1;
+            return time2.compareTo(time1); // 降序排序
+        });
+
+        return data;
+    }
 }
 
