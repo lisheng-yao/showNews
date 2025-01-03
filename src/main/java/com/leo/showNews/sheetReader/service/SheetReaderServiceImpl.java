@@ -260,16 +260,22 @@ public class SheetReaderServiceImpl implements SheetReaderService {
                         }
                     }
 
+                    // 取得檔案名稱（移除副檔名）
+                    String fileName = csvFile.getName().replaceFirst("\\.csv$", "");
+                    // 加入關鍵字（檔案名稱）
+                    rowData.put("關鍵字分類",fileName);
+
+                    data.add(rowData);
                     // 檢查 "新聞評分" 並篩選
-                    String scoreStr = rowData.getOrDefault("新聞評分", "0");
-                    try {
-                        int score = Integer.parseInt(scoreStr);
-                        if (score >= 60 && hasValidData) {
-                            data.add(rowData);
-                        }
-                    } catch (NumberFormatException e) {
-                        // 如果 "新聞評分" 不是有效數字，跳過
-                    }
+//                    String scoreStr = rowData.getOrDefault("新聞評分", "0");
+//                    try {
+//                        int score = Integer.parseInt(scoreStr);
+//                        if (score >= 60 && hasValidData) {
+//                            data.add(rowData);
+//                        }
+//                    } catch (NumberFormatException e) {
+//                        // 如果 "新聞評分" 不是有效數字，跳過
+//                    }
                 }
             } catch (Exception e) {
                 System.out.println("處理 CSV 文件失敗: " + csvFile.getName() + "，錯誤：" + e.getMessage());

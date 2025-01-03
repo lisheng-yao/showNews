@@ -76,8 +76,8 @@ body {
   text-align: left; /* 日期文字靠左 */
 }
 
-.toggle-button {
-  background-color: #ffcc00; /* 按鈕背景顏色 */
+/* .toggle-button {
+  background-color: #ffcc00; 
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -85,16 +85,34 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #333; /* 按鈕文字顏色 */
-  padding: 5px 10px; /* 內邊距調整 */
-  width: auto; /* 自適應寬度 */
-  white-space: nowrap; /* 禁止換行 */
-  margin-left: auto; /* 將按鈕推到最右 */
+  color: #333; 
+  padding: 5px 10px; 
+  width: auto; 
+  white-space: nowrap; 
+  margin-left: auto; 
+}  */
+
+/* .toggle-button:hover {
+	background-color: #ffaa00; 
+	color: #fff; 
+  } */
+
+.toggle-button {
+  background-color: transparent; /* 按鈕背景透明 */
+  border: none; /* 去掉邊框 */
+  cursor: pointer; /* 鼠標為點擊狀態 */
+  font-size: 24px; /* 調整點點點大小 */
+  color: #666; /* 點點點顏色 */
+  padding: 0; /* 移除內邊距 */
+  margin-left: auto; /* 移除外邊距 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
 .toggle-button:hover {
-  background-color: #ffaa00; /* 按鈕懸停顏色 */
-  color: #fff; /* 懸停時文字顏色 */
+  color: #000; /* 懸停時點點點顏色變深 */
 }
 
 .news-details {
@@ -124,6 +142,25 @@ h1 {
   margin: 20;
   display: flex;
   justify-content: center; /* 水平居中 */
+}
+
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #0056b3;
 }
 
 /* Loading 整體樣式 */
@@ -176,12 +213,7 @@ h1 {
 
   /* 縮圖調整 */
   .card-img {
-    width: 50%; /* 圖片寬度調整為卡片寬度的 50% */
-    max-width: 150px; /* 設定最大寬度，避免過大 */
-    height: auto; /* 保持圖片比例 */
-    margin: 0 auto 10px auto; /* 圖片居中，與文字保持間距 */
-    border-radius: 6px; /* 保留圓角 */
-    object-fit: cover; /* 確保圖片不變形 */
+    display: none; /* 手機版隱藏圖片 */
   }
 
   /* 卡片內容調整 */
