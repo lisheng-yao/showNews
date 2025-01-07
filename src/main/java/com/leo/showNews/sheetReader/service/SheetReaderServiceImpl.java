@@ -10,6 +10,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.HashMap;
@@ -239,6 +242,9 @@ public class SheetReaderServiceImpl implements SheetReaderService {
             return data;
         }
 
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime oneWeekAgo = now.minusWeeks(1);
+
         for (File csvFile : csvFiles) {
             try (Reader reader = new FileReader(csvFile);
                  CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader())) {
@@ -257,6 +263,20 @@ public class SheetReaderServiceImpl implements SheetReaderService {
 
                         if (!value.isEmpty()) {
                             hasValidData = true;
+                        }
+                    }
+
+                    // 取得 "內容擷取時間" 並檢查是否在一週內
+                    String captureTimeStr = rowData.getOrDefault("內容擷取時間", "");
+                    if (!captureTimeStr.isEmpty()) {
+                        try {
+                            LocalDateTime captureTime = LocalDateTime.parse(captureTimeStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                            if (captureTime.isBefore(oneWeekAgo) || captureTime.isAfter(now)) {
+                                continue; // 跳過不在一週內的記錄
+                            }
+                        } catch (DateTimeParseException e) {
+                            System.out.println("無效的時間格式：" + captureTimeStr);
+                            continue; // 跳過時間格式無效的記錄
                         }
                     }
 

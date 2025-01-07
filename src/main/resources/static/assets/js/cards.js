@@ -37,7 +37,7 @@ function renderData(data) {
     const category = document.createElement("div");
     category.className = "category";
     category.textContent =
-      `${item["關鍵字分類"] || ""} ${item["新聞分類"] || ""}`.trim() ||
+      `＜${item["關鍵字分類"] || ""}＞ ${item["新聞分類"] || ""}`.trim() ||
       "未分類";
 
     const time = document.createElement("div");
