@@ -10,7 +10,7 @@
 - 在前端呈現資訊
 - 支援前端頁籤過濾分類
 
-## 技術棧
+## 技術細節
 - **後端**: Java Spring Boot
 - **數據處理**: Apache Commons CSV
 - **前端**: HTML5、JavaScript（可擴展）
