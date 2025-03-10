@@ -3,6 +3,9 @@
 ## 簡介
 是一個基於 Java Spring Boot 的 Web 應用，負責從雲端 CSV 檔案抓取數據，解析後顯示在前端。透過動態方式更新新聞或資訊的場景。
 
+## 展示影片
+https://youtu.be/st48zoIwF-E
+
 ## 功能
 - 透過 Spring Boot 後端從雲端 URL 下載 CSV 檔案
 - 使用 OpenCSV 解析 CSV 內容
